@@ -31,8 +31,8 @@ Projeto do Checkpoint 5 - FrontEnd Design.
 - Efeitos de hover, focus, active, disabled e transições.
 
 ## Links
-- GitHub: adicione o link do repositório.
-- Deploy: adicione o link do site publicado, se houver.
+- GitHub: https://github.com/BrunoMuzzi15/cp5-web-tecflow.git.
+
 
 ## Dificuldades encontradas
 As principais dificuldades foram organizar os cards com Grid, adaptar a tela para celular e implementar os menus, o formulário e a troca de tema com JavaScript.
