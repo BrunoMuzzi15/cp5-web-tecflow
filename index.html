@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechFlow Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-100 text-gray-800 dark:bg-gray-950 dark:text-gray-100">
+  <div id="overlay" class="fixed inset-0 z-20 hidden bg-black/40 lg:hidden"></div>
+
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 w-64 -translate-x-full bg-white p-5 shadow-lg transition-transform dark:bg-gray-900 lg:translate-x-0">
+    <h1 class="mb-8 text-2xl font-bold text-indigo-600">TechFlow</h1>
+    <nav class="space-y-2">
+      <a href="#dashboard" class="nav-item active">Dashboard</a>
+      <a href="#projetos" class="nav-item">Projetos</a>
+      <a href="#equipes" class="nav-item">Equipe</a>
+      <a href="#tarefas" class="nav-item">Tarefas</a>
+    </nav>
+    <div class="mt-10 border-t border-gray-200 pt-5 dark:border-gray-700">
+      <p class="font-semibold">Bruno Muzzi</p>
+      <p class="text-sm text-gray-500">Administrador</p>
+    </div>
+  </aside>
+
+  <div class="min-h-screen lg:ml-64">
+    <header class="flex items-center gap-3 border-b border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+      <button id="menu-button" class="rounded-lg border px-3 py-2 lg:hidden" aria-label="Abrir menu">Menu</button>
+      <input id="search" type="search" placeholder="Buscar projeto..." class="w-full max-w-sm rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:border-gray-700 dark:bg-gray-800">
+      <div class="ml-auto relative">
+        <button id="user-button" class="rounded-lg px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Bruno</button>
+        <div id="user-menu" class="absolute right-0 z-10 mt-2 hidden w-40 rounded-lg border bg-white p-2 shadow-lg dark:border-gray-700 dark:bg-gray-900">
+          <button id="theme-button" class="w-full rounded px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-800">Mudar tema</button>
+          <p class="px-3 py-2 text-xs text-gray-500">Tema: <span id="theme-label">System</span></p>
+        </div>
+      </div>
+    </header>
+
+    <main id="dashboard" class="mx-auto max-w-7xl p-4 sm:p-6">
+      <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-indigo-600">TECHFLOW / WORKSPACE</p>
+          <h2 class="mt-1 text-3xl font-bold">Dashboard</h2>
+          <p class="mt-2 text-gray-500 dark:text-gray-400">Acompanhe os projetos e as atividades da equipe.</p>
+        </div>
+        <button id="open-modal" class="rounded-lg bg-indigo-600 px-4 py-3 font-semibold text-white transition hover:bg-indigo-700 active:scale-95">Novo projeto</button>
+      </div>
+
+      <section class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <article class="stat-card"><p>Projetos ativos</p><h3 id="active-count">12</h3><span>Em andamento</span></article>
+        <article class="stat-card"><p>Projetos concluídos</p><h3>28</h3><span>Finalizados</span></article>
+        <article class="stat-card"><p>Tarefas pendentes</p><h3 id="pending-count">08</h3><span>Precisam de atenção</span></article>
+        <article class="stat-card"><p>Equipes</p><h3>06</h3><span>Colaborando no workspace</span></article>
+      </section>
+
+      <section id="projetos" class="mb-8 rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
+        <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div><h3 class="text-xl font-bold">Projetos</h3><p class="text-sm text-gray-500 dark:text-gray-400">Resumo das iniciativas atuais.</p></div>
+          <select id="filter" class="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800">
+            <option value="Todos">Todos</option>
+            <option value="Em andamento">Em andamento</option>
+            <option value="Em revisão">Em revisão</option>
+            <option value="Concluído">Concluídos</option>
+          </select>
+        </div>
+
+        <div id="project-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <article class="project-card xl:col-span-2" data-status="Em andamento" data-name="Redesign do aplicativo">
+            <div class="project-banner bg-indigo-100 dark:bg-indigo-950"><div><p class="text-sm font-semibold text-indigo-700 dark:text-indigo-300">DESIGN</p><h4 class="text-2xl font-bold text-indigo-950 dark:text-white">Redesign do aplicativo</h4></div></div>
+            <div class="p-4"><div class="mb-3 flex items-center justify-between gap-2"><span class="status status-progress">Em andamento</span><span class="text-sm text-gray-500">72%</span></div><div class="progress"><div class="h-full w-[72%] rounded-full bg-indigo-600"></div></div><p class="mt-3 text-sm text-gray-500 dark:text-gray-400">Melhorias de usabilidade e acessibilidade.</p><p class="mt-4 text-xs text-gray-500">Responsável: Bruno Muzzi</p></div>
+          </article>
+          <article class="project-card" data-status="Em andamento" data-name="Website institucional">
+            <div class="project-banner bg-orange-100 dark:bg-orange-950"><div><p class="text-sm font-semibold text-orange-700 dark:text-orange-300">DESENVOLVIMENTO</p><h4 class="text-xl font-bold text-orange-950 dark:text-white">Website institucional</h4></div></div>
+            <div class="p-4"><div class="mb-3 flex items-center justify-between"><span class="status status-progress">Em andamento</span><span class="text-sm">45%</span></div><div class="progress"><div class="h-full w-[45%] rounded-full bg-orange-500"></div></div><p class="mt-3 text-sm text-gray-500 dark:text-gray-400">Novo site da empresa.</p><p class="mt-4 text-xs text-gray-500">Responsável: Daniel Lopes</p></div>
+          </article>
+          <article class="project-card" data-status="Em revisão" data-name="Identidade visual">
+            <div class="project-banner bg-pink-100 dark:bg-pink-950"><div><p class="text-sm font-semibold text-pink-700 dark:text-pink-300">DESIGN</p><h4 class="text-xl font-bold text-pink-950 dark:text-white">Identidade visual</h4></div></div>
+            <div class="p-4"><div class="mb-3 flex items-center justify-between"><span class="status status-review">Em revisão</span><span class="text-sm">88%</span></div><div class="progress"><div class="h-full w-[88%] rounded-full bg-pink-500"></div></div><p class="mt-3 text-sm text-gray-500 dark:text-gray-400">Padronização da marca.</p><p class="mt-4 text-xs text-gray-500">Responsável: Bruno Muzzi</p></div>
+          </article>
+          <article class="project-card" data-status="Em andamento" data-name="Plataforma de dados">
+            <div class="project-banner bg-teal-100 dark:bg-teal-950"><div><p class="text-sm font-semibold text-teal-700 dark:text-teal-300">DADOS</p><h4 class="text-xl font-bold text-teal-950 dark:text-white">Plataforma de dados</h4></div></div>
+            <div class="p-4"><div class="mb-3 flex items-center justify-between"><span class="status status-progress">Em andamento</span><span class="text-sm">61%</span></div><div class="progress"><div class="h-full w-[61%] rounded-full bg-teal-500"></div></div><p class="mt-3 text-sm text-gray-500 dark:text-gray-400">Indicadores para apoiar decisões.</p><p class="mt-4 text-xs text-gray-500">Responsável: Daniel Lopes</p></div>
+          </article>
+          <article class="project-card" data-status="Concluído" data-name="Campanha de lançamento">
+            <div class="project-banner bg-amber-100 dark:bg-amber-950"><div><p class="text-sm font-semibold text-amber-700 dark:text-amber-300">MARKETING</p><h4 class="text-xl font-bold text-amber-950 dark:text-white">Campanha de lançamento</h4></div></div>
+            <div class="p-4"><div class="mb-3 flex items-center justify-between"><span class="status status-done">Concluído</span><span class="text-sm">100%</span></div><div class="progress"><div class="h-full w-full rounded-full bg-emerald-500"></div></div><p class="mt-3 text-sm text-gray-500 dark:text-gray-400">Divulgação de novo produto.</p><p class="mt-4 text-xs text-gray-500">Responsável: Bruno Muzzi</p></div>
+          </article>
+          <article class="project-card" data-status="Em revisão" data-name="Portal do cliente">
+            <div class="project-banner bg-sky-100 dark:bg-sky-950"><div><p class="text-sm font-semibold text-sky-700 dark:text-sky-300">PRODUTO</p><h4 class="text-xl font-bold text-sky-950 dark:text-white">Portal do cliente</h4></div></div>
+            <div class="p-4"><div class="mb-3 flex items-center justify-between"><span class="status status-review">Em revisão</span><span class="text-sm">93%</span></div><div class="progress"><div class="h-full w-[93%] rounded-full bg-sky-500"></div></div><p class="mt-3 text-sm text-gray-500 dark:text-gray-400">Área de atendimento ao cliente.</p><p class="mt-4 text-xs text-gray-500">Responsável: Daniel Lopes</p></div>
+          </article>
+        </div>
+        <p id="empty-message" class="hidden py-8 text-center text-gray-500">Nenhum projeto encontrado.</p>
+      </section>
+      <section id="equipes" class="mb-8 rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
+        <div class="mb-5"><h3 class="text-xl font-bold">Equipe</h3><p class="text-sm text-gray-500 dark:text-gray-400">Conheça as pessoas e as áreas que colaboram nos projetos.</p></div>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <article class="team-card"><div class="team-avatar">BM</div><div><h4 class="font-bold">Bruno Muzzi</h4><p class="text-sm text-gray-500"></p><p class="mt-2 text-xs text-gray-500">3 projetos ativos</p></div></article>
+          <article class="team-card"><div class="team-avatar">DL</div><div><h4 class="font-bold">Daniel Lopes</h4><p class="text-sm text-gray-500"></p><p class="mt-2 text-xs text-gray-500">3 projeto ativo</p></div></article>
+        </div>
+      </section>
+
+      <section id="tarefas" class="mb-8 rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
+        <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div><h3 class="text-xl font-bold">Tarefas</h3><p class="text-sm text-gray-500 dark:text-gray-400">Acompanhe as atividades e marque o que já foi concluído.</p></div><span id="task-summary" class="rounded-full bg-indigo-50 px-3 py-1 text-sm font-semibold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">2 de 5 concluídas</span></div>
+        <div id="task-list" class="space-y-3">
+          <label class="task-row"><input type="checkbox" class="task-check" checked><span><strong>Revisar protótipo do aplicativo</strong><small>Daniel Lopes</small></span><span class="task-priority">Alta</span></label>
+          <label class="task-row"><input type="checkbox" class="task-check"><span><strong>Finalizar página inicial do site</strong><small>Bruno Muzzi</small></span><span class="task-priority">Alta</span></label>
+          <label class="task-row"><input type="checkbox" class="task-check" checked><span><strong>Validar identidade visual</strong><small>Daniel Lopes</small></span><span class="task-priority">Média</span></label>
+          <label class="task-row"><input type="checkbox" class="task-check"><span><strong>Atualizar relatório de dados</strong><small>Bruno Muzzi</small></span><span class="task-priority">Média</span></label>
+          <label class="task-row"><input type="checkbox" class="task-check"><strong>Preparar campanha de lançamento</strong><small>Daniel Lopes</small><span class="task-priority justify-between">Baixa</span></label>
+        </div>
+        <form id="task-form" class="mt-5 flex flex-col gap-3 sm:flex-row"><input id="new-task" class="form-input flex-1" placeholder="Digite uma nova tarefa" required minlength="3"><button class="rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-700" type="submit">Adicionar tarefa</button></form>
+      </section>
+    </main>
+  </div>
+
+  <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto bg-black/50 p-4">
+    <section class="my-auto w-full max-w-xl rounded-xl bg-white p-6 shadow-xl dark:bg-gray-900" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="mb-5 flex items-start justify-between"><div><h2 id="modal-title" class="text-2xl font-bold">Novo projeto</h2><p class="mt-1 text-sm text-gray-500">Preencha os dados do projeto.</p></div><button id="close-modal" class="rounded-lg px-3 py-1 text-xl hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Fechar">X</button></div>
+      <div id="form-message" class="mb-4 hidden rounded-lg p-3 text-sm"></div>
+      <form id="project-form" novalidate class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <label class="form-label sm:col-span-2">Nome do projeto
+          <input name="name" required minlength="3" class="form-input" placeholder="Ex.: Aplicativo de vendas">
+          <small class="error-message"></small>
+        </label>
+        <label class="form-label">Responsável
+          <input name="owner" required class="form-input" placeholder="Nome completo">
+          <small class="error-message"></small>
+        </label>
+        <label class="form-label">Categoria
+          <select name="category" required class="form-input"><option value="">Selecione</option><option>Design</option><option>Desenvolvimento</option><option>Marketing</option><option>Dados</option><option>Produto</option></select>
+          <small class="error-message"></small>
+        </label>
+        <label class="form-label">Prioridade
+          <select name="priority" required class="form-input"><option value="">Selecione</option><option>Baixa</option><option>Média</option><option>Alta</option></select>
+          <small class="error-message"></small>
+        </label>
+        <label class="form-label">Prazo
+          <input name="deadline" type="date" required class="form-input">
+          <small class="error-message"></small>
+        </label>
+        <label class="form-label sm:col-span-2">Descrição
+          <textarea name="description" required minlength="10" rows="3" class="form-input" placeholder="Descreva o objetivo do projeto"></textarea>
+          <small class="error-message"></small>
+        </label>
+        <div class="mt-2 flex flex-col-reverse gap-3 sm:col-span-2 sm:flex-row sm:justify-end">
+          <button type="button" id="cancel-modal" class="rounded-lg border border-gray-300 px-4 py-2 font-semibold hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800">Cancelar</button>
+          <button id="submit-button" type="submit" class="rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">Criar projeto</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>
